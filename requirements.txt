@@ -6,3 +6,9 @@ pydantic~=2.10.6
 fastapi~=0.115.11
 aiostream~=0.6.4
 uvicorn~=0.34.0
+
+llama_index.embeddings.huggingface
+llama-index-llms-huggingface
+llama_index.llms.lmstudio
+llama_index.readers.file
+llama_index.vector_stores.chroma
