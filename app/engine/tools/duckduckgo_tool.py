@@ -13,6 +13,9 @@ def duckduckgo_search(
         region Optional(str): The region to be used for the search in [country-language] convention, ex us-en, uk-en, ru-ru, etc...
         max_results Optional(int): The maximum number of results to be returned. Default is 10.
     """
+    
+    print(f"DuckDuckGo Searching for: {query}")
+    
     try:
         from duckduckgo_search import DDGS
     except ImportError:
@@ -36,7 +39,7 @@ def get_tools(**kwargs):
     return [
         FunctionTool.from_defaults(
             fn=duckduckgo_search,
-            name="DuckDuckGo Search",
+            name="duckduckgo_search",
             description="Search for any query in DuckDuckGo search engine.",
         ),
     ]

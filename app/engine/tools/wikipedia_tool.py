@@ -43,12 +43,12 @@ def get_tools(**kwargs):
     return [
         FunctionTool.from_defaults(
             fn=load_data,
-            name="Wikipedia Page",
+            name="wikipedia_load_data",
             description="Retrieve a Wikipedia page.",
         ),
         FunctionTool.from_defaults(
             fn=search_data,
-            name="Wikipedia Search",
+            name="wikipedia_search_data",
             description="Search Wikipedia for a page related to the given query.",
         ),
     ]
