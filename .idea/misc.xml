@@ -24,5 +24,6 @@
       </profile-state>
     </entry>
   </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12 (Server-with-AI)" project-jdk-type="Python SDK" />
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
 </project>
