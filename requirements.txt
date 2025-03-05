@@ -1,0 +1,8 @@
+chromadb~=0.6.3
+llama-index-core~=0.12.20
+python-dotenv~=1.0.1
+PyYAML~=6.0.2
+pydantic~=2.10.6
+fastapi~=0.115.11
+aiostream~=0.6.4
+uvicorn~=0.34.0
