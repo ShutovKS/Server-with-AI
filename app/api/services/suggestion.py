@@ -3,9 +3,11 @@ import os
 import re
 from typing import List, Optional
 
-from app.api.routers.models import Message
+from llama_index.core.base.llms.types import MessageRole
 from llama_index.core.prompts import PromptTemplate
 from llama_index.core.settings import Settings
+
+from app.api.routers.models import Message
 
 logger = logging.getLogger("uvicorn")
 
@@ -25,8 +27,8 @@ class NextQuestionSuggestion:
 
     @classmethod
     async def suggest_next_questions_all_messages(
-        cls,
-        messages: List[Message],
+            cls,
+            messages: List[Message],
     ) -> Optional[List[str]]:
         """
         Suggest the next questions that user might ask based on the conversation history
@@ -69,12 +71,12 @@ class NextQuestionSuggestion:
 
     @classmethod
     async def suggest_next_questions(
-        cls,
-        chat_history: List[Message],
-        response: str,
+            cls,
+            chat_history: List[Message],
+            response: str,
     ) -> List[str]:
         """
-        Suggest the next questions that user might ask based on the chat history and the last response
+        Предложите следующие вопросы, которые пользователь может задать на основе истории чата и последнего ответа
         """
-        messages = chat_history + [Message(role="assistant", content=response)]
+        messages = chat_history + [Message(role=MessageRole.ASSISTANT, content=response)]
         return await cls.suggest_next_questions_all_messages(messages)

@@ -8,7 +8,7 @@ logger = logging.getLogger("uvicorn")
 
 def init_settings():
     model_provider = os.getenv("LLM_PROVIDER", "huggingface")
-    logger.info(f"Initializing settings with model provider: {model_provider}")
+    logger.info(f"Инициализация настроек с поставщиком моделей: {model_provider}")
 
     match model_provider:
         case "huggingface":
@@ -16,7 +16,7 @@ def init_settings():
         case "lm-studio":
             _init_lm_studio()
 
-    logger.info("Model provider initialized")
+    logger.info("Поставщик моделей инициализирован")
 
     _init_embed_model()
 
@@ -27,7 +27,7 @@ def init_settings():
 def _init_huggingface():
     from llama_index.llms.huggingface import HuggingFaceLLM
 
-    logger.info("Initializing HuggingFace LLM")
+    logger.info("Инициализация Huggingface LLM")
 
     Settings.llm = HuggingFaceLLM(
         model_name=os.getenv("LLM_MODEL"),
@@ -39,11 +39,11 @@ def _init_huggingface():
 def _init_lm_studio():
     from llama_index.llms.lmstudio import LMStudio
 
-    logger.info("Initializing LM Studio LLM")
+    logger.info("Инициализация LM Studio LLM")
 
     Settings.llm = LMStudio(
         model_name=os.getenv("LLM_MODEL"),
-        base_url=os.getenv("LM_STUDIO_BASE_URL", "http://127.0.0.1:1234"),
+        base_url=os.getenv("LLM_BASE_URL", "http://127.0.0.1:1234"),
         temperature=0.7,
         is_chat_model=False,
         request_timeout=180,
@@ -52,17 +52,13 @@ def _init_lm_studio():
 
 
 def _init_embed_model():
-    logger.info("Initializing embed model")
+    logger.info("Инициализация embed модель")
 
     from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 
     Settings.embed_model = HuggingFaceEmbedding(
         model_name=os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-v2"),
-        trust_remote_code=os.getenv("EMBEDDING_TRUST_REMOTE_CODE", "false").lower() == "true",
         backend=os.getenv("EMBEDDING_BACKEND", "torch"),
     )
 
-    logger.info("Embed model initialized")
-
-    Settings.chunk_size = int(os.getenv("CHUNK_SIZE", "1024"))
-    Settings.chunk_overlap = int(os.getenv("CHUNK_OVERLAP", "20"))
+    logger.info("Embed модель инициализирована")

@@ -15,7 +15,7 @@ def get_vector_store():
     else:
         if not os.getenv("CHROMA_HOST") or not os.getenv("CHROMA_PORT"):
             raise ValueError(
-                "Please provide either CHROMA_PATH or CHROMA_HOST and CHROMA_PORT"
+                "Пожалуйста, предоставьте CHROMA_PATH или CHROMA_HOST и CHROMA_PORT"
             )
         store = ChromaVectorStore.from_params(
             host=os.getenv("CHROMA_HOST"),

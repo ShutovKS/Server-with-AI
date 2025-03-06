@@ -1,7 +1,7 @@
 import logging
 from typing import Any, Dict, List
 
-import yaml  # type: ignore
+import yaml
 from llama_index.core import Document
 
 from app.engine.loaders.db import DBLoaderConfig, get_db_documents

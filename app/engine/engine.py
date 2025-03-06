@@ -16,14 +16,16 @@ def get_chat_engine(params=None, event_handlers=None, **kwargs):
     tools: List[BaseTool] = []
     callback_manager = CallbackManager(handlers=event_handlers or [])
 
-    # Add query tool if index exists
+    verbose = os.getenv("VERBOSE", "False").lower() == "true"
+
+    # Добавить инструмент запроса, если существует индекс
     index_config = IndexConfig(callback_manager=callback_manager, **(params or {}))
     index = get_index(index_config)
     if index is not None:
         query_engine_tool = get_query_engine_tool(index, **kwargs)
         tools.append(query_engine_tool)
 
-    # Add additional tools
+    # Добавить дополнительные инструменты
     configured_tools: List[BaseTool] = ToolFactory.from_env()
     tools.extend(configured_tools)
 
@@ -32,5 +34,5 @@ def get_chat_engine(params=None, event_handlers=None, **kwargs):
         tools=tools,
         system_prompt=system_prompt,
         callback_manager=callback_manager,
-        verbose=True,
+        verbose=verbose,
     )

@@ -20,7 +20,7 @@ def get_index(config: IndexConfig = None):
     if config is None:
         config = IndexConfig()
 
-    logger.info("Connecting vector store...")
+    logger.info("Подключение векторного хранилища…")
 
     store = get_vector_store()
     index = VectorStoreIndex.from_vector_store(
@@ -28,6 +28,6 @@ def get_index(config: IndexConfig = None):
         callback_manager=config.callback_manager,
     )
 
-    logger.info("Finished load index from vector store.")
+    logger.info("Завершенный индекс загрузки из векторного хранилища.")
 
     return index

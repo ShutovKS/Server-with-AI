@@ -24,28 +24,19 @@ class ToolFactory:
                 tools = module.get_tools(**config)
                 if not all(isinstance(tool, FunctionTool) for tool in tools):
                     raise ValueError(
-                        f"The module {module} does not contain valid tools"
+                        f"Модуль {module} не содержит действительных инструментов"
                     )
                 return tools
         except ImportError as e:
-            raise ValueError(f"Failed to import tool {tool_name}: {e}")
+            raise ValueError(f"Не удалось импортировать инструмент {tool_name}: {e}")
         except AttributeError as e:
-            raise ValueError(f"Failed to load tool {tool_name}: {e}")
+            raise ValueError(f"Не удалось загрузить инструмент {tool_name}: {e}")
 
     @staticmethod
     def from_env(
             map_result: bool = False,
     ) -> Union[Dict[str, List[FunctionTool]], List[FunctionTool]]:
-        """
-        Load tools from the configured file.
 
-        Args:
-            map_result: If True, return a map of tool names to their corresponding tools.
-
-        Returns:
-            A dictionary of tool names to lists of FunctionTools if map_result is True,
-            otherwise a list of FunctionTools.
-        """
         tools: Union[Dict[str, FunctionTool], List[FunctionTool]] = (
             {} if map_result else []
         )
@@ -53,16 +44,17 @@ class ToolFactory:
         if os.path.exists("config/tools.yaml"):
             with open("config/tools.yaml", "r") as f:
                 tool_configs = yaml.safe_load(f)
-                for tool_name, config in tool_configs.items():
-                    loaded_tools = ToolFactory.load_tools(
-                        tool_name,
-                        config,
-                    )
-                    if map_result:
-                        tools.update(  # type: ignore
-                            {tool.metadata.name: tool for tool in loaded_tools}
+                if tool_configs:
+                    for tool_name, config in tool_configs.items():
+                        loaded_tools = ToolFactory.load_tools(
+                            tool_name,
+                            config,
                         )
-                    else:
-                        tools.extend(loaded_tools)  # type: ignore
+                        if map_result:
+                            tools.update(  # type: ignore
+                                {tool.metadata.name: tool for tool in loaded_tools}
+                            )
+                        else:
+                            tools.extend(loaded_tools)  # type: ignore
 
         return tools

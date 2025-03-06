@@ -37,7 +37,7 @@ def get_file_documents(config: FileLoaderConfig):
         function_name = traceback.extract_tb(exc_traceback)[-1].name
         if function_name == "_add_files":
             logger.warning(
-                f"Failed to load file documents, error message: {e} . Return as empty document list."
+                f"Не удалось загрузить файловые документы, сообщение об ошибке: {e}. Вернуть в виде пустого списка документов."
             )
             return []
         else:

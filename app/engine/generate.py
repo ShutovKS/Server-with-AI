@@ -47,9 +47,9 @@ def run_pipeline(docstore, vector_store, documents):
     return nodes
 
 
-def persist_storage(docstore, vector_store):
+def persist_storage(doc_store, vector_store):
     storage_context = StorageContext.from_defaults(
-        docstore=docstore,
+        docstore=doc_store,
         vector_store=vector_store,
     )
     storage_context.persist(storage_dir)
@@ -57,7 +57,7 @@ def persist_storage(docstore, vector_store):
 
 def generate_datasource():
     init_settings()
-    logger.info("Generate index for the provided data")
+    logger.info("Начало процесса генерации индексов для предоставленных данных")
 
     documents = get_documents()
 
@@ -71,7 +71,7 @@ def generate_datasource():
 
     persist_storage(doc_store, vector_store)
 
-    logger.info("Finished generating the index")
+    logger.info("Процесс генерации индексов завершен")
 
 
 if __name__ == "__main__":
