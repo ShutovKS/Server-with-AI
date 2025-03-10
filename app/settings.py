@@ -43,9 +43,7 @@ def _init_lm_studio():
 
     Settings.llm = LMStudio(
         model_name=os.getenv("LLM_MODEL"),
-        base_url=os.getenv("LLM_BASE_URL", "http://127.0.0.1:1234"),
         temperature=0.7,
-        is_chat_model=False,
         request_timeout=180,
         timeout=180,
     )

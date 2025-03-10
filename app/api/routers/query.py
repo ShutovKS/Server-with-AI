@@ -10,7 +10,7 @@ from llama_index.core.base.response.schema import Response
 from llama_index.core.tools import BaseTool
 
 from app.api.routers.models import QueryPayload
-from app.engine.index import IndexConfig, get_index
+from app.engine.index import get_index
 from app.engine.tools.query_engine import get_query_engine_tool
 
 query_router = r = APIRouter()
@@ -18,16 +18,17 @@ logger = logging.getLogger("uvicorn")
 
 
 @r.post("/complete")
-async def query_request(payload: QueryPayload) -> str:
+async def query_complete(payload: QueryPayload) -> str:
     time = datetime.now()
 
     query = payload.query
-
     verbose = os.getenv("VERBOSE", "False").lower() == "true"
-
+    system_prompt = os.getenv("SYSTEM_PROMPT"),
+    
     response: str = (await Settings.llm.acomplete(
         query,
         verbose=verbose,
+        system_prompt=system_prompt,
     )).text
 
     print(f'Time start: {time}')
@@ -38,13 +39,11 @@ async def query_request(payload: QueryPayload) -> str:
 
 
 @r.post("/request-to-stored-index")
-async def query_request(payload: QueryPayload) -> str:
+async def query_request_to_stored_index(payload: QueryPayload) -> str:
     time = datetime.now()
 
     query = payload.query
-
     verbose = os.getenv("VERBOSE", "False").lower() == "true"
-
     system_prompt = os.getenv("SYSTEM_PROMPT")
 
     index = get_index()
@@ -64,7 +63,7 @@ async def query_request(payload: QueryPayload) -> str:
 
 
 @r.post("/request-agent")
-async def query_agent(payload: QueryPayload) -> str:
+async def query_request_agent(payload: QueryPayload) -> str:
     time = datetime.now()
 
     query = payload.query
